@@ -951,6 +951,11 @@ struct mtd_partition *init_nflash_mtd_partitions(hndnand_t * nfl, struct mtd_inf
 		bootossz = 0x4000000;
 	}
 
+	if (nvram_match("model","RT-N18U")) {
+		printk(KERN_EMERG "Asus N18U\n");
+		bootossz = 0x4000000;
+	}
+
 	if (nvram_match("model","RT-AC87U")) {
 		printk(KERN_EMERG "Asus AC87U\n");
 		bootossz = 0x4000000;
