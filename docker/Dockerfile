@@ -18,6 +18,13 @@ RUN apt-get update && apt-get install -y \
 	wget \
 	libncurses5-dev zlib1g-dev
 
+# install extra packages required by making toolchain
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	texinfo \
+	libgmp3-dev \
+	libmpc-dev \
+	libmpfr-dev
+
 
 # get arguments
 ARG UID=1000
