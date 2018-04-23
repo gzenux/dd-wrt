@@ -6,7 +6,7 @@ DIR=`pwd`
 
 KERNELVER="4.4"
 SRCBASE=$(cd $DIR/../src && pwd -P)
-LINUXDIR=${SRCBASE}/linux-${KERNELVER}
+LINUXDIR=${SRCBASE}/linux/universal/linux-${KERNELVER}
 
 DO_UNPACK=YES
 DO_HEADERS=YES
