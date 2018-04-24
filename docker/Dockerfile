@@ -7,16 +7,14 @@ LABEL maintainer="YiJun Chen <gzenux@gmail.com>"
 RUN apt-get update && apt-get install -y locales sudo
 
 # install required packages
-RUN apt-get update && apt-get install -y \
-	build-essential \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	automake autopoint \
+	bison build-essential \
 	ccache \
 	flex \
 	gawk g++-multilib gettext git \
-	python \
-	quilt \
+	libtool \
 	subversion \
-	unzip \
-	wget \
 	libncurses5-dev zlib1g-dev
 
 # install extra packages required by making toolchain
