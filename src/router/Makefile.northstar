@@ -42,7 +42,7 @@ export ATH_RATE=ath_rate/sample
 #
 
 # Build platform
-export BUILD := i386-pc-linux-gnu
+export BUILD := $(shell uname -m)-pc-linux-gnu
 export HOSTCC := gcc
 
 # uClibc wrapper
