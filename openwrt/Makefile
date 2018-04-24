@@ -34,17 +34,18 @@ else
   include rules.mk
   include $(INCLUDE_DIR)/depends.mk
   include $(INCLUDE_DIR)/subdir.mk
-  include target/Makefile
-  include package/Makefile
-  include tools/Makefile
+#  include target/Makefile
+#  include package/Makefile
+#  include tools/Makefile
   include toolchain/Makefile
 
-$(toolchain/stamp-install): $(tools/stamp-install)
-$(target/stamp-compile): $(toolchain/stamp-install) $(tools/stamp-install) $(BUILD_DIR)/.prepared
-$(package/stamp-compile): $(target/stamp-compile) $(package/stamp-cleanup)
-$(package/stamp-install): $(package/stamp-compile)
-$(target/stamp-install): $(package/stamp-compile) $(package/stamp-install)
-check: $(tools/stamp-check) $(toolchain/stamp-check) $(package/stamp-check)
+#$(toolchain/stamp-install): $(tools/stamp-install)
+#$(target/stamp-compile): $(toolchain/stamp-install) $(tools/stamp-install) $(BUILD_DIR)/.prepared
+#$(package/stamp-compile): $(target/stamp-compile) $(package/stamp-cleanup)
+#$(package/stamp-install): $(package/stamp-compile)
+#$(target/stamp-install): $(package/stamp-compile) $(package/stamp-install)
+#check: $(tools/stamp-check) $(toolchain/stamp-check) $(package/stamp-check)
+check: $(toolchain/stamp-check)
 
 printdb:
 	@true
@@ -91,11 +92,13 @@ diffconfig: FORCE
 	mkdir -p $(BIN_DIR)
 	$(SCRIPT_DIR)/diffconfig.sh > $(BIN_DIR)/config.seed
 
-prepare: .config $(tools/stamp-install) $(toolchain/stamp-install)
-world: prepare $(target/stamp-compile) $(package/stamp-compile) $(package/stamp-install) $(target/stamp-install) FORCE
-	$(_SINGLE)$(SUBMAKE) -r package/index
-	$(_SINGLE)$(SUBMAKE) -r diffconfig
-	$(_SINGLE)$(SUBMAKE) -r checksum
+#prepare: .config $(tools/stamp-install) $(toolchain/stamp-install)
+prepare: .config $(toolchain/stamp-install)
+#world: prepare $(target/stamp-compile) $(package/stamp-compile) $(package/stamp-install) $(target/stamp-install) FORCE
+world: prepare FORCE
+#	$(_SINGLE)$(SUBMAKE) -r package/index
+#	$(_SINGLE)$(SUBMAKE) -r diffconfig
+#	$(_SINGLE)$(SUBMAKE) -r checksum
 
 .PHONY: clean dirclean prereq prepare world package/symlinks package/symlinks-install package/symlinks-clean
 

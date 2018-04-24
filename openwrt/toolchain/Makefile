@@ -76,10 +76,38 @@ ifneq ($(ARCH),)
 endif
 endif
 
+ifndef DUMP_TARGET_DB
+define PrepareStaging
+	@for dir in $(1); do ( \
+		$(if $(QUIET),,set -x;) \
+		mkdir -p "$$dir"; \
+		cd "$$dir"; \
+		mkdir -p bin lib include stamp; \
+	); done
+endef
+
+# preparatory work
+$(STAGING_DIR)/.prepared: $(TMP_DIR)/.build
+	$(call PrepareStaging,$(STAGING_DIR))
+	mkdir -p $(BUILD_DIR)/stamp
+	touch $@
+
+$(STAGING_DIR_HOST)/.prepared: $(TMP_DIR)/.build
+	$(call PrepareStaging,$(STAGING_DIR_HOST))
+#	mkdir -p $(BUILD_DIR_HOST)/stamp $(STAGING_DIR_HOST)/include/sys
+#	$(INSTALL_DATA) $(TOPDIR)/tools/include/*.h $(STAGING_DIR_HOST)/include/
+#	$(INSTALL_DATA) $(TOPDIR)/tools/include/sys/*.h $(STAGING_DIR_HOST)/include/sys/
+	ln -sf lib $(STAGING_DIR_HOST)/lib64
+	touch $@
+
+endif
+
 # prerequisites for the individual targets
 $(curdir)/ := .config prereq
-$(curdir)//prepare = $(STAGING_DIR)/.prepared $(TOOLCHAIN_DIR)/info.mk $(tools/stamp-install)
-$(curdir)//compile = $(1)/prepare
+#$(curdir)//prepare = $(STAGING_DIR)/.prepared $(TOOLCHAIN_DIR)/info.mk $(tools/stamp-install)
+#$(curdir)//compile = $(1)/prepare
+$(curdir)//prepare = $(STAGING_DIR)/.prepared $(STAGING_DIR_HOST)/.prepared $(TOOLCHAIN_DIR)/info.mk
+$(curdir)//compile = $(STAGING_DIR)/.prepared $(STAGING_DIR_HOST)/.prepared $(1)/prepare
 $(curdir)//install = $(1)/compile
 
 ifndef DUMP_TARGET_DB

@@ -226,7 +226,7 @@ export PATH:=$(TARGET_PATH)
 export STAGING_DIR STAGING_DIR_HOST
 export SH_FUNC:=. $(INCLUDE_DIR)/shell.sh;
 
-PKG_CONFIG:=$(STAGING_DIR_HOST)/bin/pkg-config
+PKG_CONFIG:=pkg-config
 
 export PKG_CONFIG
 
@@ -251,7 +251,7 @@ BUILD_KEY=$(TOPDIR)/key-build
 TARGET_CC:=$(TARGET_CROSS)gcc
 TARGET_CXX:=$(TARGET_CROSS)g++
 KPATCH:=$(SCRIPT_DIR)/patch-kernel.sh
-SED:=$(STAGING_DIR_HOST)/bin/sed -i -e
+SED:=sed -i -e
 CP:=cp -fpR
 LN:=ln -sf
 XARGS:=xargs -r
@@ -305,7 +305,7 @@ else
     STRIP:=$(TARGET_CROSS)strip $(call qstrip,$(CONFIG_STRIP_ARGS))
   else
     ifneq ($(CONFIG_USE_SSTRIP),)
-      STRIP:=$(STAGING_DIR_HOST)/bin/sstrip
+      STRIP:=sstrip
     endif
   endif
   RSTRIP= \
@@ -316,7 +316,7 @@ else
     NM="$(TARGET_CROSS)nm" \
     STRIP="$(STRIP)" \
     STRIP_KMOD="$(SCRIPT_DIR)/strip-kmod.sh" \
-    PATCHELF="$(STAGING_DIR_HOST)/bin/patchelf" \
+    PATCHELF="patchelf" \
     $(SCRIPT_DIR)/rstrip.sh
 endif
 
@@ -333,7 +333,7 @@ ifeq ($(CONFIG_BUILD_LOG),y)
 endif
 
 export BISON_PKGDATADIR:=$(STAGING_DIR_HOST)/share/bison
-export M4:=$(STAGING_DIR_HOST)/bin/m4
+export M4:=m4
 
 define shvar
 V_$(subst .,_,$(subst -,_,$(subst /,_,$(1))))
@@ -350,7 +350,7 @@ endef
 # Execute commands under flock
 # $(1) => The shell expression.
 # $(2) => The lock name. If not given, the global lock will be used.
-ifneq ($(wildcard $(STAGING_DIR_HOST)/bin/flock),)
+ifneq ($(wildcard $(if $(shell command -v flock),$(shell command -v flock),$(STAGING_DIR_HOST)/bin/flock)),)
   define locked
 	SHELL= \
 	flock \

@@ -79,7 +79,7 @@ endef
 
 define Host/Configure
 	env
-	yes '' | $(KMAKE) oldconfig
+#	yes '' | $(KMAKE) oldconfig
 	$(call Host/Configure/all)
 	$(call Host/Configure/post/$(ARCH))
 endef
