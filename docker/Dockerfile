@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y locales sudo
 # install required packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	automake autopoint \
-	bison build-essential \
+	bison bc build-essential \
 	ccache \
 	flex \
 	gawk g++-multilib gettext git \
