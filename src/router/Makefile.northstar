@@ -76,9 +76,8 @@ export KERNELRELEASE = $(shell cat $(LINUXDIR)/include/config/kernel.release 2> 
 #endif
 
 #ifeq ($(PLATFORM),mipsel-uclibc)
-export CROSS_COMPILE := $(ARCH)-linux-uclibc-
 export CONFIGURE := ./configure $(ARCH)-linux --build=$(BUILD)
-export TOOLCHAIN := $(shell cd $(dir $(shell which $(CROSS_COMPILE)gcc))/.. && pwd -P)
+export CROSS_COMPILE := $(if $(TOOLCHAIN),$(patsubst %gcc,%,$(shell basename $(TOOLCHAIN)/bin/*-gcc)),$(error TOOLCHAIN is not set!))
 #endif
 
 #ifeq ($(CONFIG_BCMWPA2),y)
