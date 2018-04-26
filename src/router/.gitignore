@@ -1,0 +1,5 @@
+Makefile
+.config
+.config.cmd
+.config.old
+*-uclibc
