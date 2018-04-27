@@ -14,7 +14,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	flex \
 	gawk g++-multilib gettext git \
 	libtool \
+	python \
 	subversion \
+	unzip \
+	wget \
 	libncurses5-dev zlib1g-dev
 
 # install extra packages required by making toolchain
