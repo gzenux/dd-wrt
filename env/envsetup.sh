@@ -24,8 +24,16 @@ Profile=$(readlink -f "$Profile")/$(basename "$1")
 SrcDir=${PrjDir}/src/router
 KernelDir=${PrjDir}/src/linux
 
+# backup/restore PATH variable
+[[ -z "$PATH_BACKUP" ]] && PATH_BACKUP=$PATH || PATH=$PATH_BACKUP
+
+####################
+# profile handling #
+####################
 # source profile settings
 source $Profile || return
+
+# required keys checking
 ReqVarList="MAKEFILE ROUTER_CONFIG KERNEL_CONFIG KERNEL_PATH TOOLCHAIN_PATH"
 MissVar=0
 for var in $ReqVarList
@@ -34,9 +42,21 @@ do
 done
 [[ $MissVar = 0 ]] || return
 
-# backup/restore PATH variable
-[[ -z "$PATH_BACKUP" ]] && PATH_BACKUP=$PATH || PATH=$PATH_BACKUP
+# profile configs generating
+# profile configs array
+#declare -A CfgProf=()
+# file => array converting
+#while read line
+#do
+#	[[ -z "$(sed -e '/^.*#/d' -e '/^$/d' <<< $line)" ]] || {
+#		line="$(sed -e 's:=.*$::g' <<< $line)"
+#		CfgProf[$line]=${!line}
+#	}
+#done < $Profile
 
+#########################
+# environment preparing #
+#########################
 # prepare the environment configurations
 echo $PATH | grep ${TOOLCHAIN_PATH}/bin > /dev/null 2>&1 || export PATH="$PATH:${TOOLCHAIN_PATH}/bin"
 export TOOLCHAIN="$TOOLCHAIN_PATH"
@@ -48,5 +68,5 @@ export TOOLCHAIN="$TOOLCHAIN_PATH"
 cd ${SrcDir} > /dev/null
 
 # unset variables in this script
-for var in $ReqVarList; do unset $var; done
+#for key in ${!CfgProf[@]}; do unset $key; done
 unset THIS_SCRIPT PrjDir Profile SrcDir KernelDir ReqVarList MissVar
