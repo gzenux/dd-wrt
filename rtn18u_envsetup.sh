@@ -20,5 +20,8 @@ EvnSetup=${PrjDir}/env/envsetup.sh
 [[ -f "$Profile" ]] || { echo "Error: $Profile not found!"; return 1; }
 source $EvnSetup $Profile
 
+# STAGING_DIR is required by openwrt toolchains
+export STAGING_DIR
+
 # unset variables in this script
 unset THIS_SCRIPT PrjDir Profile EvnSetup
