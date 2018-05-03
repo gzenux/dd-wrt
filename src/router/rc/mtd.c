@@ -28,7 +28,7 @@
 #endif
 
 #if IS_KERNEL26
-#include <linux/mtd/mtd-abi.h>
+#include <mtd/mtd-abi.h>
 #else
 #include <linux/mtd/mtd.h>
 #endif

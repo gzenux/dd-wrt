@@ -1,19 +1,22 @@
 util-linux-configure: ncurses
-	make -C util-linux clean
-	cd util-linux && ./configure --host=$(ARCH)-linux-uclibc --prefix=/usr --libdir=/usr/tmp CFLAGS="$(COPTS) $(MIPS16_OPT) -fPIC -DNEED_PRINTF" PKG_CONFIG="/tmp" NCURSES_CFLAGS="-I$(TOP)/ncurses/include" NCURSES_LIBS="-L$(TOP)/ncurses/lib -lncurses" \
+	cd util-linux && ./autogen.sh && ./configure --host=$(ARCH)-linux-uclibc --prefix=/usr --libdir=/usr/tmp CFLAGS="$(COPTS) $(MIPS16_OPT) -fPIC -DNEED_PRINTF" PKG_CONFIG="/tmp" NCURSES_CFLAGS="-I$(TOP)/ncurses/include" NCURSES_LIBS="-L$(TOP)/ncurses/lib -lncurses" \
 	--disable-rpath \
+	--disable-makeinstall-chown \
+	--disable-makeinstall-setuid \
 	--enable-new-mount	\
 	--disable-tls		\
 	--disable-sulogin	\
+	--disable-libmount	\
 	--without-python	\
 	--without-udev		\
 	--with-ncurses
-	make -C util-linux
 
 util-linux-clean:
 	make -C util-linux clean
 
-util-linux: ncurses
+util-linux/Makefile: util-linux-configure
+
+util-linux: util-linux/Makefile
 	make -C util-linux
 
 util-linux-install:

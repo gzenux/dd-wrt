@@ -11,6 +11,7 @@ installwebfiles:
 	install -d $(INSTALLDIR)/www
 	install -m 644 $(wildcard *.asp) $(wildcard *.svg) $(wildcard *.css) $(wildcard *.jpg) $(wildcard *.gif) $(wildcard *.js) $(wildcard *.htm) $(wildcard *.ico) $(wildcard *.html) $(INSTALLDIR)/www
 
+	mkdir -p images style
 	cp -a images $(INSTALLDIR)/www
 	cp -a style $(INSTALLDIR)/www
 	

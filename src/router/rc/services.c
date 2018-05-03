@@ -13,7 +13,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <wait.h>
+#include <sys/wait.h>
 //#include <net/route.h>                /* AhMan March 18 2005 */
 #include <sys/types.h>
 #include <signal.h>

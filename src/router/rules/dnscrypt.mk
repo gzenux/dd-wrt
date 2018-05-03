@@ -5,12 +5,12 @@ libsodium-clean:
 	make -C libsodium clean
 	
 libsodium-configure:
-	cd libsodium && ./configure --host=$(ARCH)-linux-uclibc  \
+	cd libsodium && ./autogen.sh && ./configure --host=$(ARCH)-linux-uclibc  \
 	--disable-ssp \
 	--disable-shared \
 	--enable-static \
 	--enable-minimal \
-	CC="ccache $(ARCH)-linux-uclibc-gcc" \
+#	CC="ccache $(ARCH)-linux-uclibc-gcc" \
 	CFLAGS="$(COPTS) $(MIPS16_OPT)  -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	CPPFLAGS="$(COPTS) $(MIPS16_OPT)  -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	LDFLAGS="$(COPTS) $(MIPS16_OPT) -ffunction-sections -fdata-sections -Wl,--gc-sections  -fPIC -v -Wl,--verbose"

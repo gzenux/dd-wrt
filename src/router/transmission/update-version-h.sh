@@ -27,6 +27,9 @@ if [ -n "$JENKINS_URL" -a -n "$SVN_REVISION" ]; then
     # Jenkins automated build, use the set environment variables to avoid
     # version mismatches between java's svn and command line's svn
     svn_revision=$SVN_REVISION
+elif [ -n "$SVN_REVISION" ]; then
+    # use environment variable if it is available
+    svn_revision=$SVN_REVISION
 elif [ -d ".svn" ] && type svnversion >/dev/null 2>&1; then
     # If this is a svn tree, and svnversion is available in PATH, use it to
     # grab the version.

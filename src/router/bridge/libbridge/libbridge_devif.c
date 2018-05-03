@@ -23,7 +23,7 @@
 #include <errno.h>
 #include <string.h>
 #include <dirent.h>
-#include <sys/fcntl.h>
+#include <fcntl.h>
 
 #include "libbridge.h"
 #include "libbridge_private.h"

@@ -10,11 +10,12 @@ RUN apt-get update && apt-get install -y locales sudo
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	automake autopoint \
 	bison bc build-essential \
-	ccache \
+	ccache cmake \
 	flex \
 	gawk g++-multilib gettext git \
 	libtool \
-	python \
+	openssl \
+	pkg-config python \
 	subversion \
 	unzip \
 	wget \

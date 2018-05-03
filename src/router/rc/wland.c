@@ -14,7 +14,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <syslog.h>
-#include <wait.h>
+#include <sys/wait.h>
 #include <ctype.h>
 
 #include <bcmnvram.h>

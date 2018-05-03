@@ -19,7 +19,9 @@ ncurses-configure:
 ncurses-clean:
 	make -j 4 -C ncurses clean
 
-ncurses:
+ncurses/Makefile: ncurses-configure
+
+ncurses: ncurses/Makefile
 	make -j 4 -C ncurses
 
 ncurses-install:

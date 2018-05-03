@@ -9,7 +9,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <limits.h>
-#include <sys/fcntl.h>
+#include <fcntl.h>
 #include <sys/ioctl.h>
 #include <sys/mount.h>
 #include <sys/reboot.h>

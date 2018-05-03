@@ -15,7 +15,7 @@ dnsmasq-clean:
 	$(MAKE) -j 4 -C dnsmasq CFLAGS="$(COPTS)" clean
 	$(MAKE) -j 4 -C dnsmasq/contrib/lease-tools CFLAGS="$(COPTS)" clean
 
-
+dnsmasq-configure:
 
 dnsmasq:
 	$(MAKE) -C dnsmasq clean

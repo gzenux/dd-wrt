@@ -34,7 +34,7 @@ KernelDir=${PrjDir}/src/linux
 source $Profile || return
 
 # check the required keys
-ReqVarList="MAKEFILE ROUTER_CONFIG KERNEL_CONFIG KERNEL_PATH TOOLCHAIN_PATH"
+ReqVarList="MAKEFILE ROUTER_CONFIG KERNEL_CONFIG KERNEL_PATH TOOLCHAIN_PATH SVN_REVISION"
 MissVar=0
 for var in $ReqVarList
 do
@@ -53,8 +53,17 @@ export TOOLCHAIN="$TOOLCHAIN_PATH"
 [[ "$(readlink -f $SrcDir/.config)" = "$(readlink -f $ROUTER_CONFIG)" ]] || ln -sf "$(readlink -f $ROUTER_CONFIG)" "$SrcDir/.config"
 [[ "$(readlink -f $KERNEL_PATH/.config)" = "$(readlink -f $KERNEL_CONFIG)" ]] || ln -sf "$(readlink -f $KERNEL_CONFIG)" "$KERNEL_PATH/.config"
 
+# generating ${SrcDir}/shared/revision.h
+cat > ${SrcDir}/shared/revision.h <<EOF
+#define SVN_REVISION "${SVN_REVISION}"
+EOF
+export SVN_REVISION
+
 # change dir into srouce root
 cd ${SrcDir} > /dev/null
+
+# make sequence
+#make configure && make && make install
 
 # unset variables in this script
 unset THIS_SCRIPT PrjDir Profile SrcDir KernelDir ReqVarList MissVar

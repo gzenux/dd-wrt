@@ -50,7 +50,7 @@
 #endif
 
 #if IS_KERNEL26
-#include <linux/mtd/mtd-abi.h>
+#include <mtd/mtd-abi.h>
 #else
 #include <linux/mtd/mtd.h>
 #endif
@@ -311,10 +311,10 @@ static int mtd_resetbc(char *mtd)
 		return -1;
 	}
 //      num_bc = mtd_info.size / mtd_info.writesize;
-	num_bc = mtd_info.size / mtd_info.oobblock;
+	num_bc = mtd_info.size / mtd_info.writesize;
 
 	for (i = 0; i < num_bc; i++) {
-		pread(fd, curr, sizeof(*curr), i * mtd_info.oobblock);
+		pread(fd, curr, sizeof(*curr), i * mtd_info.writesize);
 
 		if (curr->magic != BOOTCOUNT_MAGIC && curr->magic != 0xffffffff) {
 			fprintf(stderr, "unexpected magic %08x, bailing out\n", curr->magic);
@@ -348,13 +348,13 @@ static int mtd_resetbc(char *mtd)
 		i = 0;
 	}
 
-	memset(curr, 0xff, mtd_info.oobblock);
+	memset(curr, 0xff, mtd_info.writesize);
 
 	curr->magic = BOOTCOUNT_MAGIC;
 	curr->count = 0;
 	curr->checksum = BOOTCOUNT_MAGIC;
 
-	ret = pwrite(fd, curr, mtd_info.oobblock, i * mtd_info.oobblock);
+	ret = pwrite(fd, curr, mtd_info.writesize, i * mtd_info.writesize);
 	if (ret < 0)
 		fprintf(stderr, "failed to write: %i\n", ret);
 	sync();
