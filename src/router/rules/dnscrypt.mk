@@ -1,9 +1,11 @@
-libsodium:
+libsodium: libsodium/Makefile
 	make -C libsodium
-	
+
 libsodium-clean:
 	make -C libsodium clean
-	
+
+libsodium/Makefile: libsodium-configure
+
 libsodium-configure:
 	cd libsodium && ./autogen.sh && ./configure --host=$(ARCH)-linux-uclibc  \
 	--disable-ssp \
@@ -29,7 +31,9 @@ dnscrypt-configure: libsodium-configure
 	CPPFLAGS="$(COPTS) $(MIPS16_OPT) -I$(TOP)/libsodium/src/libsodium/include -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	LDFLAGS="-L$(TOP)/libsodium/src/libsodium/.libs $(LDFLAGS) -ffunction-sections -fdata-sections -Wl,--gc-sections"
 
-dnscrypt: libsodium
+dnscrypt/Makefile: dnscrypt-configure
+
+dnscrypt: dnscrypt/Makefile libsodium
 	make -C dnscrypt 
 
 dnscrypt-clean:

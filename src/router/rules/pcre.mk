@@ -2,8 +2,9 @@ pcre-configure:
 	cd pcre && ./configure --host=$(ARCH)-linux-uclibc CFLAGS="$(COPTS)  $(MIPS16_OPT)" --prefix=/usr --disable-xmldoc --enable-utf8 --enable-unicode-properties --disable-pcretest-libreadline --libdir=$(TOP)/pcre/.libs
 	touch $(TOP)/pcre/*   
 
+pcre/Makefile: pcre-configure
 
-pcre:
+pcre: pcre/Makefile
 	$(MAKE) -C pcre CFLAGS="$(COPTS) $(MIPS16_OPT)" CXXFLAGS="$(COPTS) $(MIPS16_OPT)" CPPFLAGS="$(COPTS) $(MIPS16_OPT)"
 
 pcre-clean:

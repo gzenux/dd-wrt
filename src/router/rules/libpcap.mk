@@ -11,7 +11,10 @@ libpcap-configure:
 		--with-pcap=linux --without-septel --without-dag \
 		--disable-canusb --disable-can --disable-bluetooth \
 		CC="$(CC)" CFLAGS="$(COPTS) -fPIC"
-libpcap:
+
+libpcap/Makefile: libpcap-configure
+
+libpcap: libpcap/Makefile
 #	$(MAKE) -C libpcap CC="$(CC)" AR=$(AR) RANLIB=$(RANLIB) libpcap.so 
 	$(MAKE) -C libpcap CC="$(CC)" AR=$(AR) RANLIB=$(RANLIB) version.h
 ifeq ($(CONFIG_LIBPCAP_SHARED),y)

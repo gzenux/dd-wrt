@@ -6,8 +6,9 @@ gmp-configure:
 		--enable-assembly \
 		CFLAGS="$(COPTS) $(MIPS16_OPT) -I$(TOP)/iptables/include/libipq/ -ffunction-sections -fdata-sections" LDFLAGS="-L$(TOP)/iptables/libipq"
 
+gmp/Makefile: gmp-configure
 
-gmp:
+gmp: gmp/Makefile
 	$(MAKE) -C gmp CFLAGS="$(COPTS)"
 
 gmp-install:

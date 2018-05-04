@@ -6,7 +6,9 @@ NETTLE_CONFIGURE_ARGS+= \
 nettle-configure: pcre zlib openssl gmp
 	cd nettle && ./configure --host=$(ARCH)-linux --disable-shared --disable-pic --prefix=/usr $(NETTLE_CONFIGURE_ARGS) CFLAGS="$(COPTS) $(MIPS16_OPT) -ffunction-sections -fdata-sections -I$(TOP)/pcre -I$(TOP)/gmp -I$(TOP)/zlib" CPPFLAGS="$(COPTS) $(MIPS16_OPT)" LDFLAGS="-L$(TOP)/pcre/.libs -L$(TOP)/gmp/.libs -lpthread -lpcre -L$(TOP)/zlib $(LDFLAGS) -lz"
 
-nettle: openssl gmp
+nettle/Makefile: nettle-configure
+
+nettle: nettle/Makefile
 	make -C nettle 
 
 nettle-clean:
