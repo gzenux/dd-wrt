@@ -26,11 +26,11 @@ glib20-configure: libffi zlib util-linux
 	rm -f $(INSTALLDIR)/util-linux/usr/lib/libmount.so*
 	rm -f $(INSTALLDIR)/util-linux/usr/lib/libmount.la
 
-	cd glib20/libiconv && ./configure --enable-shared --enable-static --host=$(ARCH)-linux CFLAGS="$(COPTS) -std=gnu89 $(MIPS16_OPT)  -D_GNU_SOURCE -fPIC -Drpl_malloc=malloc"
+	cd glib20/libiconv && GNULIB_SRCDIR=$$(pwd)/gnulib-local ./autogen.sh --skip-gnulib && ./configure --enable-shared --enable-static --host=$(ARCH)-linux CFLAGS="$(COPTS) -std=gnu89 $(MIPS16_OPT)  -D_GNU_SOURCE -fPIC -Drpl_malloc=malloc"
 	cd glib20/libiconv && touch *
 	$(MAKE) -C glib20/libiconv clean all
 
-	cd glib20/gettext && ./configure --disable-libmount --enable-shared --disable-static --disable-openmp --host=$(ARCH)-linux  LDFLAGS="$(COPTS) -std=gnu89 $(MIPS16_OPT) -D_GNU_SOURCE -fPIC -Drpl_malloc=malloc " CFLAGS="$(COPTS)  $(MIPS16_OPT)  -D_GNU_SOURCE -fPIC -Drpl_malloc=malloc -I$(TOP)/glib20/libiconv/include" CXXFLAGS="$(COPTS)  $(MIPS16_OPT) -D_GNU_SOURCE -fPIC -Drpl_malloc=malloc -I$(TOP)/glib20/libiconv/include"
+	cd glib20/gettext && GNULIB_SRCDIR=$$(pwd)/gnulib-local ./autogen.sh --skip-gnulib && ./configure --disable-libmount --enable-shared --disable-static --disable-openmp --host=$(ARCH)-linux  LDFLAGS="$(COPTS) -std=gnu89 $(MIPS16_OPT) -D_GNU_SOURCE -fPIC -Drpl_malloc=malloc " CFLAGS="$(COPTS)  $(MIPS16_OPT)  -D_GNU_SOURCE -fPIC -Drpl_malloc=malloc -I$(TOP)/glib20/libiconv/include" CXXFLAGS="$(COPTS)  $(MIPS16_OPT) -D_GNU_SOURCE -fPIC -Drpl_malloc=malloc -I$(TOP)/glib20/libiconv/include"
 	cd glib20/gettext && touch *
 	$(MAKE) -C glib20/gettext clean all
 

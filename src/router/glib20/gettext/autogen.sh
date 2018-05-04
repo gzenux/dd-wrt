@@ -374,6 +374,8 @@ if ! $skip_gnulib; then
     $GNULIB_TOOL --copy-file tests/init.sh gettext-tools || exit $?
     $GNULIB_TOOL --copy-file build-aux/git-version-gen || exit $?
   fi
+else
+  GNULIB_TOOL="$GNULIB_SRCDIR"/gnulib-tool
 fi
 
 # Fetch config.guess, config.sub.

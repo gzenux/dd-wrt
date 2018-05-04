@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	bison bc build-essential \
 	ccache cmake \
 	flex \
-	gawk g++-multilib gettext git \
+	gawk g++-multilib gettext git gperf groff \
 	libtool \
 	openssl \
 	pkg-config python \

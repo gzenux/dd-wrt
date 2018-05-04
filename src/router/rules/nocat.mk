@@ -1,6 +1,28 @@
 nocat-configure:
-	rm -f $(TOP)/glib/config.cache
-	cd glib && ./config.sh "$(CC)" "$(COPTS) $(MIPS16_OPT)  -std=gnu89" ac_cv_host=$(ARCH)-uclibc-linux --target=$(ARCH)-linux --host=$(ARCH)
+	cd glib && rm -f ./config.cache && \
+	CC="$(CC)" CFLAGS="$(COPTS) $(MIPS16_OPT) -std=gnu89" \
+	glib_cv_prog_cc_ansi_proto=no \
+	ac_cv_sizeof_char=1 \
+	ac_cv_sizeof_short=2 \
+	ac_cv_sizeof_long=4 \
+	ac_cv_sizeof_void_p=4 \
+	ac_cv_sizeof_int=4 \
+	ac_cv_sizeof_long_long=8 \
+	glib_cv_has__inline=yes \
+	glib_cv_has__inline__=yes \
+	glib_cv_hasinline=yes \
+	glib_cv_sane_realloc=yes \
+	glib_cv_va_copy=no \
+	glib_cv___va_copy=yes \
+	glib_cv_va_val_copy=yes \
+	glib_cv_rtldglobal_broken=no \
+	glib_cv_uscore=no \
+	ac_cv_func_getpwuid_r=yes \
+	glib_cv_func_pthread_mutex_trylock_posix=yes \
+	glib_cv_func_pthread_cond_timedwait_posix=yes \
+	glib_cv_sizeof_gmutex=24 \
+	glib_cv_byte_contents_gmutex="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" \
+	./configure --prefix=$(TOP)/glib-1.2.10-install --cache-file=config.cache --host=$(ARCH)-linux
 	cd nocat && ./configure --with-remote-splash CC="$(CC)" CFLAGS="$(COPTS) $(MIPS16_OPT) -std=gnu89 -DNEED_PRINTF -I../libghttp " --prefix=/tmp/ --with-glib-prefix=$(TOP)/glib-1.2.10-install --disable-glibtest --host=$(ARCH)-linux
 
 nocat:

@@ -1,6 +1,7 @@
+zabbix/Makefile: zabbix-configure
 
-zabbix:
-	CC="$(ARCH)-linux-uclibc-gcc" \
+zabbix: zabbix/Makefile
+	CC="$(CC)" \
 	CFLAGS="$(COPTS) $(MIPS16_OPT) -I$(TOP)/zlib -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	CPPFLAGS="$(COPTS) $(MIPS16_OPT) -I$(TOP)/zlib -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	LDFLAGS="$(COPTS) $(MIPS16_OPT) -L$(TOP)/zlib -lz -fPIC" \
@@ -29,7 +30,7 @@ zabbix-clean:
 zabbix-configure:
 	cd zabbix && rm -rf config.{cache,status} \
 	&& autoheader && autoconf \
-	&& ./configure ac_cv_host=$(ARCH)-uclibc-linux --target=$(ARCH)-linux --host=$(ARCH) CC=$(ARCH)-linux-uclibc-gcc \
+	&& ./configure ac_cv_host=$(ARCH)-uclibc-linux --target=$(ARCH)-linux --host=$(ARCH)-linux CC=$(CC) \
 	--disable-server --disable-proxy --disable-java --enable-agent --without-iconv \
 	--with-libpcre-include="$(TOP)/pcre" \
 	--with-libpcre="$(TOP)/pcre" \
