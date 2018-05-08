@@ -310,7 +310,7 @@ include rules/screen.mk
 #
 
 %:
-	[ ! -d $* ] || $(MAKE) -C $*
+	-[ ! -d $* ] || $(MAKE) -C $*
 
 %-distclean:
 	[ ! -d $* ] || $(MAKE) -C $* clean

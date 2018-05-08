@@ -19,12 +19,12 @@ python-configure: libffi-configure libffi libffi-install
 		ac_cv_file__dev_ptmx=yes \
 		ac_cv_file__dev_ptc=no
 
-
+python/Makefile: python-configure
 
 python-clean:
 	make -C python clean
 
-python: libffi
+python: python/Makefile
 	make -C libffi install DESTDIR=$(INSTALLDIR)/libffi
 	make -C python python Parser/pgen
 	make -C python sharedmods

@@ -1,7 +1,9 @@
 ser2net-configure:
 	cd ser2net && ./configure --host=$(ARCH)-linux CFLAGS="$(COPTS) -DNEED_PRINTF" --prefix=/usr
 
-ser2net:
+ser2net/Makefile: ser2net-configure
+
+ser2net: ser2net/Makefile
 	make -C ser2net
 
 ser2net-clean:

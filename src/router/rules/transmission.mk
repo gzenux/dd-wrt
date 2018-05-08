@@ -1,4 +1,4 @@
-transmission: libevent curl
+transmission: transmission/Makefile libevent curl
 	CC="ccache $(ARCH)-linux-uclibc-gcc" \
 	CFLAGS="$(COPTS) $(MIPS16_OPT) -D_GNU_SOURCE -ffunction-sections -fdata-sections -Wl,--gc-sections  -I$(TOP)/zlib  -I$(TOP)/curl/include -I$(TOP)/libevent/include" \
 	CPPFLAGS="$(COPTS) $(MIPS16_OPT) -D_GNU_SOURCE -ffunction-sections -fdata-sections -Wl,--gc-sections  -I$(TOP)/zlib   -I$(TOP)/curl/include -I$(TOP)/libevent/include" \
@@ -18,6 +18,8 @@ transmission-install:
 
 transmission-clean:
 	$(MAKE) -C transmission clean
+
+transmission/Makefile: transmission-configure
 
 transmission-configure: libevent-configure curl-configure
 	-cd transmission && ./autogen.sh

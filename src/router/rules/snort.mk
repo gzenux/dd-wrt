@@ -32,7 +32,9 @@ snort-configure: daq-configure pcre-configure daq pcre
 		--with-daq-libraries="$(TOP)/daq/install/lib64" \
 		PATH=$(TOP)/daq/install/bin:$(PATH)
 
-snort: pcre
+snort/Makefile: snort-configure
+
+snort: snort/Makefile
 	$(MAKE) -C snort CFLAGS="$(COPTS) $(MIPS16_OPT) -DNEED_PRINTF -I$(TOP)/librpc"
 
 snort-clean:

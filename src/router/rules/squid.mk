@@ -54,8 +54,10 @@ squid-configure:
 	--enable-epoll \
 	--with-krb5-config=no \
 	--with-maxfd=4096
-	
-squid:
+
+squid/Makefile: squid-configure
+
+squid: squid/Makefile
 	make -C squid
 #	make -C squid/plugins/squid_radius_auth 
 

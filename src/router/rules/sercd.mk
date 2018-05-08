@@ -1,7 +1,9 @@
 sercd-configure:
 	cd sercd && ./configure --host=$(ARCH)-linux CFLAGS="$(COPTS) -DNEED_PRINTF" --prefix=/usr
 
-sercd:
+sercd/Maekfile: sercd-configure
+
+sercd: sercd/Maekfile
 	make -C sercd
 
 sercd-clean:

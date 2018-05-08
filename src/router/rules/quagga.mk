@@ -11,7 +11,9 @@ else
 	cd quagga && touch *
 endif
 
-quagga: ncurses
+quagga/Makefile: quagga-configure
+
+quagga: quagga/Makefile
 ifeq ($(CONFIG_QUAGGA_STABLE),y)
 	$(MAKE) -j 4 -C quagga-stable
 else

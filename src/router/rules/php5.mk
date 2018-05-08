@@ -1,5 +1,5 @@
 php5: libxml2 libmcrypt
-	CC="ccache $(ARCH)-linux-uclibc-gcc" \
+	CC="ccache $(CC)" \
 	CFLAGS="$(COPTS) $(MIPS16_OPT)   -I$(TOP)/libpng -I$(TOP)/libxml2/include -I$(TOP)/curl/include -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	CPPFLAGS="$(COPTS) $(MIPS16_OPT) -I$(TOP)/libpng -I$(TOP)/libxml2/include -I$(TOP)/curl/include -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	LDFLAGS="$(COPTS) $(MIPS16_OPT) -L$(TOP)/libpng/.libs -L$(TOP)/libxml2/.libs -lxml2 -L$(TOP)/glib20/libiconv/lib/.libs -liconv -L$(TOP)/zlib -L$(TOP)/openssl -L$(TOP)/zlib -lz -L$(TOP)/curl/lib/.libs -lcurl -lcrypto -lssl -ldl -fPIC -v -Wl,--verbose" \

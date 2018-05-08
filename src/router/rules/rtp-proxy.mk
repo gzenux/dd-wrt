@@ -1,7 +1,9 @@
 rtpproxy-configure:
 	cd rtpproxy && ./configure --host=$(ARCH)-uclibc-linux CFLAGS="$(COPTS) -Drpl_malloc=malloc $(MIPS16_OPT) -ffunction-sections -fdata-sections -Wl,--gc-sections"
 
-rtpproxy:
+rtpproxy/Makefile: rtpproxy-configure
+
+rtpproxy: rtpproxy/Makefile
 	$(MAKE) -C rtpproxy
 
 rtpproxy-install:

@@ -2,7 +2,9 @@ proftpd-configure:
 	cd proftpd && ./configure --enable-largefile --host=$(ARCH)-linux --prefix=/tmp/proftpd --disable-trace --disable-ctrls --disable-ncurses --disable-curses --with-modules=mod_radius ac_cv_func_setpgrp_void=y ac_cv_func_setgrent_void=y CFLAGS="$(COPTS) $(MIPS16_OPT) -ffunction-sections -fdata-sections -Wl,--gc-sections" LDFLAGS="$(COPTS) $(MIPS16_OPT) -ffunction-sections -fdata-sections -Wl,--gc-sections"
 	sed -i 's/HAVE_LU/HAVE_LLU/g' proftpd/config.h
 
-proftpd:
+proftpd/Makefile: proftpd-configure
+
+proftpd: proftpd/Makefile
 	$(MAKE) -C proftpd
 
 proftpd-clean:

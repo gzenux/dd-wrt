@@ -34,12 +34,17 @@ chillispot-configure:
 	cd $(CHILLIDIR) && ./bootstrap
 	cd $(CHILLIDIR) &&  rm -rf config.{cache,status} && ./configure $(CHILLIEXTRAFLAGS) --host=$(ARCH)-linux-elf CFLAGS="$(COPTS) $(MIPS16_OPT) $(CHILLIEXTRA_CFLAGS) -DHAVE_MALLOC=1 -Drpl_malloc=malloc -ffunction-sections -fdata-sections -Wl,--gc-sections"
 
-chillispot:
+chillispot/Makefile: chillispot-configure
+
+chillispot: chillispot/Makefile
+ifdef CommentOut
 	rm -f coova-chilli/src/cmdline.c
 	rm -f coova-chilli/src/cmdline.h
 	$(MAKE) -C $(CHILLIDIR)
+endif
 
 chillispot-install:
+ifdef CommentOut
 ifneq ($(CONFIG_FON),y)
 	install -D $(CHILLIDIR)/config/chillispot.nvramconfig $(INSTALLDIR)/chillispot/etc/config/chillispot.nvramconfig
 	install -D $(CHILLIDIR)/config/chillispot.webhotspot $(INSTALLDIR)/chillispot/etc/config/chillispot.webhotspot
@@ -61,6 +66,7 @@ endif
 	cd $(INSTALLDIR)/chillispot/usr/sbin && ln -sf chilli_multicall chilli_query
 	cd $(INSTALLDIR)/chillispot/usr/sbin && ln -sf chilli_multicall chilli_radconfig
 	cd $(INSTALLDIR)/chillispot/usr/sbin && ln -sf chilli_multicall chilli_response
+endif
 
 chillispot-clean:
 	$(MAKE) -C $(CHILLIDIR) clean

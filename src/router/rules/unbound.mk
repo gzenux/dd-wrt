@@ -13,7 +13,9 @@ unbound-configure:
 		CFLAGS="$(COPTS) $(MIPS16_OPT) -ffunction-sections -fdata-sections -Wl,--gc-sections -L$(TOP)/openssl" \
 		LDFLAGS="-ffunction-sections -fdata-sections -Wl,--gc-sections -L$(TOP)/openssl"
 
-unbound: 
+unbound/Makefile: unbound-configure
+
+unbound: unbound/Makefile
 	$(MAKE) -C unbound
 
 unbound-clean: 

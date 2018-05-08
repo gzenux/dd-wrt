@@ -1,5 +1,5 @@
 
-privoxy: pcre
+privoxy: privoxy/Makefile
 	CC="$(ARCH)-linux-uclibc-gcc" \
 	CFLAGS="$(COPTS) $(MIPS16_OPT) -I$(TOP)/zlib -I$(TOP)/pcre -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	CPPFLAGS="$(COPTS) $(MIPS16_OPT) -I$(TOP)/zlib -ffunction-sections -fdata-sections -Wl,--gc-sections" \
@@ -21,6 +21,8 @@ privoxy-install:
 
 privoxy-clean:
 	$(MAKE) -C privoxy clean
+
+privoxy/Makefile: privoxy-configure
 
 privoxy-configure: pcre-configure pcre
 	cd privoxy && rm -rf config.{cache,status} \

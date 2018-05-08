@@ -73,7 +73,9 @@ icu-configure:
 #	--with-cross-build="$(TOP)/icu/staging/share/icu/61.1" \
 #	--prefix=/usr
 
-icu:
+icu/Makefile: icu-configure
+
+icu: icu/Makefile
 	make -C icu
 	make -C icu install
 

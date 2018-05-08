@@ -7,9 +7,10 @@ radvd-configure: nvram libutils
 	
 radvd-clean:
 	if test -e "radvd/Makefile"; then make -C radvd/flex clean; make -C radvd clean; make -C radvd/libdaemon clean; fi
-		
 
-radvd:
+radvd/Makefile: radvd-configure
+
+radvd: radvd/Makefile
 	make -C radvd/libdaemon
 	make -C radvd/flex libfl.a
 	make -C radvd
