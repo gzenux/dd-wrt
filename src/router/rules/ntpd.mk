@@ -1,7 +1,9 @@
 ntpd-configure:
 	cd ntpd && ./configure --host=$(ARCH)-linux CFLAGS="$(COPTS) -DNEED_PRINTF" --prefix=/usr
 
-ntpd:
+ntpd/Makefile: ntpd-configure
+
+ntpd: ntpd/Makefile
 	make   -C ntpd
 
 ntpd-clean:

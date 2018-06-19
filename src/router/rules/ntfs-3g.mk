@@ -1,5 +1,5 @@
 
-ntfs-3g:
+ntfs-3g: ntfs-3g/Makefile
 	CC="$(CC)" \
 	CFLAGS="$(COPTS)  $(MIPS16_OPT) -ffunction-sections -fdata-sections -Wl,--gc-sections" \
 	CPPFLAGS="$(COPTS) $(MIPS16_OPT) -ffunction-sections -fdata-sections -Wl,--gc-sections" \
@@ -17,6 +17,8 @@ ntfs-3g-install:
 ntfs-3g-clean:
 	$(MAKE) -C ntfs-3g/fuse clean
 	$(MAKE) -C ntfs-3g clean
+
+ntfs-3g/Makefile: ntfs-3g-configure
 
 ntfs-3g-configure:
 	cd ntfs-3g/fuse && ./configure --prefix=/usr \

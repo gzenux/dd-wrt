@@ -3,7 +3,9 @@ nprobe-configure:
 	chmod +x nprobe/config.guess
 	cd nprobe && ./configure --prefix=/usr --host=$(ARCH)-linux CC="$(CC)" CPPFLAGS="-I../libpcap $(COPTS) -DNEED_PRINTF" CFLAGS="-I../libpcap $(COPTS) -DNEED_PRINTF" LDFLAGS="-L../libpcap" --with-only-ipv4 PCAP_ROOT="$(TOP)/libpcap" \
 
-nprobe:
+nprobe/Makefile: nprobe-configure
+
+nprobe: nprobe/Makefile
 	make -C nprobe all
 
 

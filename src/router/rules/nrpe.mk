@@ -6,9 +6,9 @@ nrpe-configure:
 	--with-nagios-user=root \
 	--with-nagios-group=root
 
+nrpe/Makefile: nrpe-configure
 
-
-nrpe:
+nrpe: nrpe/Makefile
 	cd nrpe && openssl dhparam -C 512 | awk '/^-----/ {exit} {print}' > include/dh.h
 	make -C nrpe
 
